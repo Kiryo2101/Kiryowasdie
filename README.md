@@ -1,2 +1,1 @@
-# Kiryowasdie
-Script
+
