@@ -2968,9 +2968,7 @@ function Library:CreateWindow(...)
     if type(Config.MenuFadeTime) ~= 'number' then Config.MenuFadeTime = 0.2 end
 
     if typeof(Config.Position) ~= 'UDim2' then Config.Position = UDim2.fromOffset(175, 50) end
-    if type(Config.SizeTopBottom) ~= 'number' then Config.Size = UDim2.fromOffset(Config.SizeLeftRight, 600) end
-    if type(Config.SizeLeftRight) ~= 'number' then Config.Size = UDim2.fromOffset(550, Config.SizeTopBottom) end
-    if type(Config.SizeTopBottom) ~= 'number' and type(Config.SizeLeftRight) ~= 'number' then Config.Size = UDim2.fromOffset(550, 600) end
+    if typeof(Config.Size) ~= 'UDim2' then Config.Size = UDim2.fromOffset(550, 600) end
 
     if Config.Center then
         Config.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -2991,11 +2989,6 @@ function Library:CreateWindow(...)
         ZIndex = 1;
         Parent = ScreenGui;
     });
-    function Window:UpdateSize(SizeLeftRight, SizeTopBottom)
-        SizeLeftRight = SizeLeftRight or 550
-        SizeTopBottom = SizeTopBottom or 600
-        Outer.Size = UDim2.fromOffset(SizeLeftRight, SizeTopBottom)
-    end
 
     Library:MakeDraggable(Outer, 25);
 
@@ -3141,7 +3134,7 @@ function Library:CreateWindow(...)
             BackgroundTransparency = 1;
             BorderSizePixel = 0;
             Position = UDim2.new(0, 8 - 1, 0, 8 - 1);
-            Size = UDim2.new(0.5, -12 + 2, 0, Config.SizeTopBottom - 95);
+            Size = UDim2.new(0.5, -12 + 2, 0, 507 + 2);
             CanvasSize = UDim2.new(0, 0, 0, 0);
             BottomImage = '';
             TopImage = '';
@@ -3154,7 +3147,7 @@ function Library:CreateWindow(...)
             BackgroundTransparency = 1;
             BorderSizePixel = 0;
             Position = UDim2.new(0.5, 4 + 1, 0, 8 - 1);
-            Size = UDim2.new(0.5, -12 + 2, 0, Config.SizeTopBottom - 95);
+            Size = UDim2.new(0.5, -12 + 2, 0, 507 + 2);
             CanvasSize = UDim2.new(0, 0, 0, 0);
             BottomImage = '';
             TopImage = '';
@@ -3162,12 +3155,6 @@ function Library:CreateWindow(...)
             ZIndex = 2;
             Parent = TabFrame;
         });
-
-        function Window:UpdateSizeTopBottomScroll(TopBottom)
-            TopBottom = TopBottom or Config.SizeTopBottom
-            LeftSide.Size = UDim2.new(0.5, -10, 0, TopBottom - 95);
-            RightSide.Size = UDim2.new(0.5, -10, 0, TopBottom - 95);
-        end
 
         Library:Create('UIListLayout', {
             Padding = UDim.new(0, 8);
@@ -3221,10 +3208,14 @@ function Library:CreateWindow(...)
                 BackgroundColor3 = Library.BackgroundColor;
                 BorderColor3 = Library.OutlineColor;
                 BorderMode = Enum.BorderMode.Inset;
-                Size = UDim2.new(1, 0, 0, Config.SizeTopBottom - 95);
+                Size = UDim2.new(1, 0, 0, 507 + 2);
                 ZIndex = 2;
                 Parent = Info.Side == 1 and LeftSide or RightSide;
             }); 
+
+            function Window:ResizeGroup(SizeTopBottom)
+                BoxOuter.Size = UDim2.new(1, 0, 0, SizeTopBottom - 95)
+            end
 
             Library:AddToRegistry(BoxOuter, {
                 BackgroundColor3 = 'BackgroundColor';
