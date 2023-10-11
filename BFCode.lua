@@ -1,5 +1,4 @@
-function s()
-    return {
+return {
         "Sub2CaptainMaui",
 		"DEVSCOOKING",
 		"kittgaming",
@@ -39,4 +38,3 @@ function s()
 		"Starcodeheo",
 		"Bluxxy",
     }
-end
