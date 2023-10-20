@@ -20,12 +20,6 @@ for i,v in pairs(hwid) do
 		break
 	end
 end
-if _G[string.sub(Hwid,  #Hwid/2,  #Hwid)] == nil then
-    _G[string.sub(Hwid,  #Hwid/2,  #Hwid)] = 0
-end
-if game:GetService('CoreGui'):FindFirstChild(string.sub(Hwid,  #Hwid/2,  #Hwid)) then
-    _G[string.sub(Hwid,  #Hwid/2,  #Hwid)] = _G[string.sub(Hwid,  #Hwid/2,  #Hwid)] + 1
-end
 local ProtectGui = protectgui or (syn and syn.protect_gui) or (function() end);
 
 local ScreenGui = Instance.new('ScreenGui');
@@ -3540,8 +3534,26 @@ function Library:CreateWindow(...)
         Toggled = (not Toggled);
         ModalElement.Modal = Toggled;
 
-        if Toggled then
+	if Toggled then
             Outer.Visible = true;
+
+            task.spawn(function()
+
+                local Cursor = Drawing.new('Triangle');
+                Cursor.Thickness = 1;
+                Cursor.Filled = true;
+                Cursor.Visible = true;
+
+                local CursorOutline = Drawing.new('Triangle');
+                CursorOutline.Thickness = 1;
+                CursorOutline.Filled = false;
+                CursorOutline.Color = Color3.new(0, 0, 0);
+                CursorOutline.Visible = true;
+
+
+                Cursor:Remove();
+                CursorOutline:Remove();
+            end);
         end;
 
         for _, Desc in next, Outer:GetDescendants() do
