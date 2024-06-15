@@ -16,7 +16,7 @@ local hwid = decoded.headers
 
 for i,v in pairs(hwid) do
 	if string.find(i, "Fingerprint") then
-		getgenv().Hwid = v
+		Hwid = v
 		break
 	end
 end
